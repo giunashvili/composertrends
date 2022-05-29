@@ -13,7 +13,7 @@ CREATE TABLE packages (
 CREATE TABLE downloads (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     package_id INTEGER NOT NULL,
-    date TIMESTAMP NOT NULL,
+    date VARCHAR(255) NOT NULL,
     value INTEGER NOT NULL,
     FOREIGN KEY(package_id) REFERENCES packages(id)
 );
