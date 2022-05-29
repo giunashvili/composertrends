@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from database.connection import close_db, get_db
+from database.connection import close_db
 from cli.syncpackages import insert_packages_into_database, fetch_downloads
 from cli.database import refresh_database
 from database.query import find_package, find_all_packages, find_package_downloads
@@ -13,7 +13,7 @@ app.cli.add_command(fetch_downloads)
 app.teardown_appcontext(close_db)
 
 
-@app.route('/packages')
+@app.route('/api/packages')
 def packages():
     fetched_packages = find_all_packages()
 
@@ -30,7 +30,7 @@ def packages():
     return jsonify(pretty_packages)
 
 
-@app.route('/package/<path:package>')
+@app.route('/api/package/<path:package>')
 def get_package_details(package):
     vendor, name = package.split('/')
     fetched_package = find_package(vendor, name)
@@ -41,7 +41,7 @@ def get_package_details(package):
         'vendor': fetched_package['vendor'],
         'description': fetched_package['description'],
         'github_stars': fetched_package['github_stars'],
-        'repository': fetched_package['repo'],
+        'repository': fetched_package['repository'],
         'statistics': downloads,
     }
 

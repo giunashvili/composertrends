@@ -3,7 +3,7 @@ from database.connection import get_db
 
 def find_package(vendor, name):
     db = get_db()
-    sql = 'SELECT id FROM packages where vendor = ? AND name = ?'
+    sql = 'SELECT * FROM packages where vendor = ? AND name = ?'
     package = db.cursor().execute(sql, [vendor, name]).fetchone()
 
     if package is None:
@@ -21,7 +21,7 @@ def find_all_packages():
 def find_package_downloads(_id):
     db = get_db()
     sql = 'SELECT * FROM downloads WHERE package_id = ?'
-    db.cursor().execute(sql, [_id]).fetchall()
+    return db.cursor().execute(sql, [_id]).fetchall()
 
 
 def insert_packages(packages):

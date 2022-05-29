@@ -8,6 +8,7 @@ from flask.cli import with_appcontext
 all_packages_count = 0
 fetched_packages_count = 0
 pretty_packages = []
+package_downloads = []
 
 
 def fetch_package_detailed_info(packages):
@@ -17,6 +18,15 @@ def fetch_package_detailed_info(packages):
         print(f'{fetched_packages_count}/{all_packages_count}')
         pretty_package = services.fetch_package_details(package)
         pretty_packages.append(pretty_package)
+
+
+def fetch_package_downloads(packages):
+    global fetched_packages_count, all_packages_count, pretty_packages
+    for package in packages:
+        fetched_packages_count += 1
+        print(f'{fetched_packages_count}/{all_packages_count}')
+        pretty_downloads = services.fetch_downloads(package)
+        package_downloads.append(pretty_downloads)
 
 
 @click.command('insert:packages')
@@ -32,8 +42,13 @@ def insert_packages_into_database():
 
     for i in range(thread_count):
         start_count = i * package_per_thread
-        end_count = (i + 1) * package_per_thread
-        thread = threading.Thread(target=fetch_package_detailed_info, args=(raw_packages[start_count:end_count],))
+        end_count = start_count + package_per_thread
+
+        thread = threading.Thread(
+            target=fetch_package_detailed_info,
+            args=(raw_packages[start_count:end_count],)
+        )
+
         thread.start()
         threads.append(thread)
 
@@ -41,8 +56,8 @@ def insert_packages_into_database():
         target=fetch_package_detailed_info,
         args=(raw_packages[package_per_thread * thread_count:],)
     )
-
     last_thread.start()
+
     [t.join() for t in threads]
     last_thread.join()
 
@@ -66,25 +81,41 @@ def insert_packages_into_database():
 @click.command('fetch:downloads')
 @with_appcontext
 def fetch_downloads():
+    global package_downloads, all_packages_count
     raw_packages = query.find_all_packages()
-    parsed_packages = map(lambda p: p['vendor'] + '/' + p['name'], raw_packages)
+    all_packages_count = len(raw_packages)
+    parsed_packages = list(map(lambda p: p['vendor'] + '/' + p['name'], raw_packages))
 
-    stats = []
     threads = []
     thread_count = 10
-    packages_length = len(parsed_packages)
-    downloads_per_thread = packages_length // thread_count
-    for package in parsed_packages:
-        threading.Thread(target=services.fetch_downloads, args=(package,))
+    downloads_per_thread = all_packages_count // thread_count
+    for i in range(thread_count):
+        start_count = i * downloads_per_thread
+        end_count = start_count + downloads_per_thread
 
-    stats = [services.fetch_downloads(package) for package in parsed_packages]
+        thread = threading.Thread(
+            target=fetch_package_downloads,
+            args=(parsed_packages[start_count:end_count],)
+        )
+        thread.start()
+        threads.append(thread)
 
-    for stat in stats:
-        package, statistics = operator.itemgetter('package', 'stats')(stat)
+    last_thread = threading.Thread(
+        target=fetch_package_downloads,
+        args=(parsed_packages[thread_count * downloads_per_thread:],)
+    )
+    last_thread.start()
+
+    [thread.join() for thread in threads]
+    last_thread.join()
+
+    for download in package_downloads:
+        package, statistics = operator.itemgetter('package', 'stats')(download)
         vendor, name = package.split('/')
         package = query.find_package(vendor, name)
         query.delete_package_downloads(package['id'])
 
         downloads_to_insert = [(package['id'], stat['date'], stat['value']) for stat in statistics]
         query.insert_downloads(downloads_to_insert)
-    return stats
+    click.echo('========================')
+    click.echo('Package download statistics has been fetched!')
