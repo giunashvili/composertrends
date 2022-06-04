@@ -41,7 +41,7 @@ install the dependencies:
 pip install -r requirements.txt
 ```
 
-now you we can activate virtual environment:
+now we can activate virtual environment:
 ```commandline
 source ./venv/bin/activate
 ```
