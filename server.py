@@ -1,19 +1,19 @@
-from flask import Flask, jsonify
-from database.connection import close_db
-from cli.syncpackages import insert_packages_into_database, fetch_downloads
-from cli.database import refresh_database
-from database.query import find_package, find_all_packages, find_package_downloads
+from flask import Flask, jsonify, abort
+from app.database.connection import close_db
+from app.cli.syncpackages import insert_packages_into_database, fetch_downloads
+from app.cli.database import refresh_database
+from app.database.query import find_package, find_all_packages, find_package_downloads
 
-app = Flask(__name__)
+flask = Flask(__name__)
 
-app.cli.add_command(refresh_database)
-app.cli.add_command(insert_packages_into_database)
-app.cli.add_command(fetch_downloads)
+flask.cli.add_command(refresh_database)
+flask.cli.add_command(insert_packages_into_database)
+flask.cli.add_command(fetch_downloads)
 
-app.teardown_appcontext(close_db)
+flask.teardown_appcontext(close_db)
 
 
-@app.route('/api/packages')
+@flask.route('/api/packages')
 def packages():
     fetched_packages = find_all_packages()
 
@@ -30,10 +30,14 @@ def packages():
     return jsonify(pretty_packages)
 
 
-@app.route('/api/package/<path:package>')
+@flask.route('/api/package/<path:package>')
 def get_package_details(package):
     vendor, name = package.split('/')
     fetched_package = find_package(vendor, name)
+
+    if fetched_package is None:
+        abort(404)
+
     raw_downloads = find_package_downloads(fetched_package['id'])
     downloads = [{'date': download['date'], 'value': download['value']} for download in raw_downloads]
     data = {

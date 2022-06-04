@@ -1,8 +1,8 @@
 import click
-import services
+from app import services
 import operator
 import threading
-from database import query
+from app.database import query
 from flask.cli import with_appcontext
 
 all_packages_count = 0

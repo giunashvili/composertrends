@@ -1,14 +1,10 @@
-from database.connection import get_db
+from app.database.connection import get_db
 
 
 def find_package(vendor, name):
     db = get_db()
     sql = 'SELECT * FROM packages where vendor = ? AND name = ?'
     package = db.cursor().execute(sql, [vendor, name]).fetchone()
-
-    if package is None:
-        raise Exception('The package you are looking for does not exists.')
-
     return package
 
 
