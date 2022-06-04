@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, abort
 from app.database.connection import close_db
-from app.cli.syncpackages import insert_packages_into_database, fetch_downloads
 from app.cli.database import refresh_database
+from app.cli.syncpackages import insert_packages_into_database, fetch_downloads
 from app.database.query import find_package, find_all_packages, find_package_downloads
 
 flask = Flask(__name__)

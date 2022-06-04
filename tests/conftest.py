@@ -2,7 +2,8 @@ import os
 import pytest
 import tempfile
 from server import flask
-from app.database.connection import init_db, get_db
+from app.database.connection import init_db
+from tests.factories.PackageFactory import PackageFactory
 
 
 @pytest.fixture
@@ -31,20 +32,6 @@ def runner(application):
     return application.test_cli_runner()
 
 
-class Factory:
-    def __init__(self, app):
-        self.app = app
-
-    def insert_packages(self):
-        with self.app.app_context():
-            db = get_db()
-            with self.app.open_resource('tests/data/dummy_packages.sql') as f:
-                db.executescript(f.read().decode('utf8'))
-
-    def insert_downloads(self):
-        return
-
-
 @pytest.fixture
-def factory(application):
-    return Factory(application)
+def package_factory(application):
+    return PackageFactory(application)

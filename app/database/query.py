@@ -20,6 +20,14 @@ def find_package_downloads(_id):
     return db.cursor().execute(sql, [_id]).fetchall()
 
 
+def insert_package(vendor, name, description, github_stars, repository):
+    db = get_db()
+    sql = "INSERT INTO packages (vendor, name, description, github_stars, repository) VALUES (?, ?, ?, ?, ?)"
+    bindings = [vendor, name, description, github_stars, repository]
+    db.cursor().execute(sql, bindings)
+    db.commit()
+
+
 def insert_packages(packages):
     db = get_db()
     sql = "INSERT INTO packages (vendor, name, description, github_stars, repository) VALUES (?, ?, ?, ?, ?)"
