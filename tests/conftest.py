@@ -2,7 +2,6 @@ import os
 import pytest
 import tempfile
 from server import flask
-from flask import current_app
 from app.database.connection import init_db, get_db
 
 
@@ -37,8 +36,6 @@ class Factory:
         self.app = app
 
     def insert_packages(self):
-        # with current_app.app_context():
-        #
         with self.app.app_context():
             db = get_db()
             with self.app.open_resource('tests/data/dummy_packages.sql') as f:

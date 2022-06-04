@@ -1,6 +1,3 @@
-import pytest
-
-
 def test_package_response_is_ok(client):
     response = client.get('/api/packages')
     assert response.status_code == 200
