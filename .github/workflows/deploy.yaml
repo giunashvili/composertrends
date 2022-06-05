@@ -1,0 +1,26 @@
+name: Automatic Deployment
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script_stop: true
+          script: |
+            cd apps
+            cd composertrends
+            source venv/bin/activate
+            pip install -r requirements.txt 
+            npm ci
+            npm run tailwind:prod
+            supervisorctl restart composertrends
