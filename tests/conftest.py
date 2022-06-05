@@ -4,6 +4,7 @@ import tempfile
 from server import flask
 from app.database.connection import init_db
 from tests.factories.PackageFactory import PackageFactory
+from tests.factories.DownloadFactory import DownloadFactory
 
 
 @pytest.fixture
@@ -35,3 +36,8 @@ def runner(application):
 @pytest.fixture
 def package_factory(application):
     return PackageFactory(application)
+
+
+@pytest.fixture
+def download_factory(application):
+    return DownloadFactory(application)

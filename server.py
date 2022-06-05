@@ -55,7 +55,7 @@ def get_package_details(package):
         'description': fetched_package['description'],
         'github_stars': fetched_package['github_stars'],
         'repository': fetched_package['repository'],
-        'statistics': downloads,
+        'downloads': downloads,
     }
 
     return jsonify(data)
