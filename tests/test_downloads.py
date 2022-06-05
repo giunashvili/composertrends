@@ -17,7 +17,6 @@ def test_package_details_has_downloads_property(download_factory, package_factor
 
 
 def test_downloads_record_has_right_structure(package_factory, download_factory, application, client):
-    package_factory.create()
     download_factory.create()
     download_factory.create()
     download_factory.create()
