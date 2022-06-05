@@ -45,4 +45,3 @@ def test_package_has_all_the_downloads(package_factory, download_factory, applic
         download_count = len(data['downloads'])
 
         assert download_count == 3
-
