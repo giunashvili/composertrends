@@ -1,16 +1,26 @@
-from flask import Flask, jsonify, abort
+import os
+from flask import Flask, jsonify, abort, render_template
 from app.database.connection import close_db
 from app.cli.database import refresh_database
 from app.cli.syncpackages import insert_packages_into_database, fetch_downloads
 from app.database.query import find_package, find_all_packages, find_package_downloads
 
-flask = Flask(__name__)
+flask = Flask(
+    __name__,
+    template_folder=os.path.abspath('../../resources/templates'),
+)
 
 flask.cli.add_command(refresh_database)
 flask.cli.add_command(insert_packages_into_database)
 flask.cli.add_command(fetch_downloads)
 
 flask.teardown_appcontext(close_db)
+
+print(flask.template_folder)
+
+@flask.route('/')
+def home():
+    return render_template('home.html')
 
 
 @flask.route('/api/packages')

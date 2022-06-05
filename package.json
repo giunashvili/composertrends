@@ -1,0 +1,28 @@
+{
+  "name": "composertrends",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "tailwind:watch": "npx tailwindcss -i ./resources/css/app.css -o ./static/css/app.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giunashvili/composertrends.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/giunashvili/composertrends/issues"
+  },
+  "homepage": "https://github.com/giunashvili/composertrends#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.0.24"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.2"
+  }
+}

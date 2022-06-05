@@ -3,3 +3,6 @@ venv
 .idea
 __pycache__
 .coverage
+node_modules
+static/css
+static/js
