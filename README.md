@@ -1,18 +1,15 @@
 ### ComposerTrends
 
+<a href="https://composertrends.com" target="_blank">composertrends.com</a> is a platform to visit and find a suitable composer package for your next-big-idea project.
+ComposerTrends is inspired by a beautiful platform [npmtrends.com](https://npmtrends.com)
 
 #### Table of Contents
 
-* [Introduction](#introduction)
 * [Requirements](#requirements)
 * [Tech Stack](#tech-stack)
 * [Getting Started](#getting-started)
 * [Resources](#resources)
 
-
-#### Introduction
-ComposerTrends will be a platform to visit and find a suitable composer package for your next-big-idea project.
-ComposerTrends is inspired by a beautiful platform [npmtrends.com](https://npmtrends.com)
 
 #### Requirements
 
