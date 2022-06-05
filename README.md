@@ -1,6 +1,6 @@
 ### ComposerTrends
 
-<a href="https://composertrends.com" target="_blank">composertrends.com</a> is a platform to visit and find a suitable composer package for your next-big-idea project.
+[composertrends.com](https://composertrends.com) is a platform to visit and find a suitable composer package for your next-big-idea project.
 ComposerTrends is inspired by a beautiful platform [npmtrends.com](https://npmtrends.com)
 
 #### Table of Contents
