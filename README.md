@@ -19,11 +19,13 @@ ComposerTrends is inspired by a beautiful platform [npmtrends.com](https://npmtr
 * [Python 3.8](https://www.python.org/)
 
 #### Tech Stack
-* [Flask v2.1.x](https://flask.palletsprojects.com/en/2.1.x/)
-* [requests v2.27.x](https://requests.readthedocs.io/en/latest/)
-* [Jinja2 v3.1.x](https://jinja.palletsprojects.com/en/3.1.x/)
-* [Faker v13.12.x](https://faker.readthedocs.io/en/master/)
-* [Pytest v7.1.x](https://docs.pytest.org/en/7.1.x/)
+* [Flask v2.1.2](https://flask.palletsprojects.com/en/2.1.x/)
+* [requests v2.27.1](https://requests.readthedocs.io/en/latest/)
+* [Jinja2 v3.1.2](https://jinja.palletsprojects.com/en/3.1.x/)
+* [Faker v13.12.0](https://faker.readthedocs.io/en/master/)
+* [Pytest v7.1.2](https://docs.pytest.org/en/7.1.x/)
+* [Responses v0.21.0](https://github.com/getsentry/responses)
+* [Gunicorn v20.0.1](https://docs.gunicorn.org/en/stable/)
 
 #### Getting Started
 In order to get started with the project clone the github repo:

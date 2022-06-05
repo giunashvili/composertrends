@@ -7,7 +7,7 @@ from app.database.query import find_package, find_all_packages, find_package_dow
 
 flask = Flask(
     __name__,
-    template_folder=os.path.abspath('../../resources/templates'),
+    template_folder=os.path.abspath('resources/templates'),
 )
 
 flask.cli.add_command(refresh_database)
@@ -16,7 +16,6 @@ flask.cli.add_command(fetch_downloads)
 
 flask.teardown_appcontext(close_db)
 
-print(flask.template_folder)
 
 @flask.route('/')
 def home():
